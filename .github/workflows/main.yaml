@@ -1,0 +1,96 @@
+name: 'Generate Weather Reports'
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+  repository-projects: write
+
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  cancel-in-progress: true
+
+jobs:
+  generate-weather-reports:
+    name: Generate Weather Reports
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+    
+      - name: Setup scripting environment variables
+        id: setup
+        working-directory: ${{ github.workspace }}
+        run: |
+          ## Setup environment
+          echo "::group::Set environment variables"
+          echo "THE_DATE=$(date +"%Y-%m-%d")" >> $GITHUB_OUTPUT
+          echo "THE_YEAR=$(date +"%Y")" >> $GITHUB_OUTPUT
+          echo "THE_MONTH=$(date +"%m")" >> $GITHUB_OUTPUT
+          echo "THE_DAY=$(date +"%d")" >> $GITHUB_OUTPUT
+          echo "THE_HOUR=$(date +"%H")" >> $GITHUB_OUTPUT
+          echo "::endgroup::"
+
+      - name: Cache weather data
+        id: cache-json
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-weather-json-data
+        with:
+          path: ./cache/*.json
+          key: weather-json-data-${{ steps.setup.outputs.THE_DATE }}-${{ steps.setup.outputs.THE_HOUR }}
+          restore-keys: |
+            weather-json-data-${{ steps.setup.outputs.THE_DATE }}-
+
+      - name: Creating any missing directories
+        id: missing
+        working-directory: ${{ github.workspace }}
+        run: |
+          ## Create missing directories
+          if [[ ! -e cache ]]; then
+            mkdir cache
+          fi
+
+      - if: ${{ steps.cache-json.outputs.cache-hit != 'true' }}
+        name: Download latest weather data
+        run: |
+          ## Download weather data
+          ./.github/scripts/download-hourly-weather.sh
+          ./.github/scripts/download-daily-weather.sh
+
+      - name: Checkout reports repo
+        uses: actions/checkout@v3
+        with:
+          repository: MichaelMahgu/caledon-woods-weather-reports
+          ref: 'main'
+          token:  ${{ secrets.ACTIONS_GITHUB_TOKEN }}
+          path: reports
+
+      - name: Creating any missing directories
+        id: missing2
+        working-directory: ${{ github.workspace }}
+        run: |
+          ## Create missing directories
+          if [[ ! -e cache ]]; then
+            mkdir cache
+          fi
+          if [ ! -e "reports/docs/data/$(date +%Y/%m/%d)/" ]; then
+            mkdir -p "reports/docs/data/$(date +%Y/%m/%d)/"
+          fi
+
+      - if: ${{ steps.cache-json.outputs.cache-hit != 'true' }}
+        name: Copy download data
+        run: cp cache/*.json "reports/docs/data/$(date +%Y/%m/%d)/"
+
+      - if: ${{ steps.cache-json.outputs.cache-hit != 'true' }}
+        name: Commit data
+        run: |
+          git config --global user.name "Github Automation"
+          git config --global user.email "<>"
+          cd reports
+          git add .
+          git commit -m "new: report data"
+          git push
