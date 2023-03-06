@@ -4,7 +4,7 @@
 captures_str="$(IFS=','; echo "${!${mode}_captures[*]}")"
 
 # Build final API url
-final_url="${api_url}?latitude=${latitude}&longitude=${longitude}&timezone=${timezone}&timeformat=${timeformat}&models=${models}&${mode}=${captures_str}"
+final_url="${api_url}?current_weather=true&latitude=${latitude}&longitude=${longitude}&timezone=${timezone}&timeformat=${timeformat}&models=${models}&${mode}=${captures_str}"
 
 # Make sure our directories exist
 if [[ ! -e ./cache ]]; then

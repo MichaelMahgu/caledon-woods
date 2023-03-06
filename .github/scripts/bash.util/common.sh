@@ -5,8 +5,9 @@ latitude=43.9186
 longitude=-79.7973
 timezone=America%2FNew_York
 timeformat=unixtime
-models=gem_seamless
+models=auto
 mode=daily
+current_weather=true
 
 # Setup Environment
 the_date=$(date +"%Y-%m-%d")

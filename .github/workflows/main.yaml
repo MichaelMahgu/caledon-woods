@@ -2,6 +2,8 @@ name: 'Generate Weather Reports'
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 * * * *'
 
 permissions:
   contents: read
@@ -18,9 +20,15 @@ jobs:
     name: Generate Weather Reports
     runs-on: ubuntu-latest
     steps:
+      - name: Set scripting environment timezone to EST
+        run: |
+          echo "export TZ=America/New_York" >> $GITHUB_ENV
+          sudo timedatectl set-timezone America/New_York
+          echo $(date +"%H")
+
       - name: Checkout
         uses: actions/checkout@v3
-    
+
       - name: Setup scripting environment variables
         id: setup
         working-directory: ${{ github.workspace }}
@@ -33,17 +41,18 @@ jobs:
           echo "THE_DAY=$(date +"%d")" >> $GITHUB_OUTPUT
           echo "THE_HOUR=$(date +"%H")" >> $GITHUB_OUTPUT
           echo "::endgroup::"
+          echo $(date +"%H")
 
-      - name: Cache weather data
-        id: cache-json
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-weather-json-data
-        with:
-          path: ./cache/*.json
-          key: weather-json-data-${{ steps.setup.outputs.THE_DATE }}-${{ steps.setup.outputs.THE_HOUR }}
-          restore-keys: |
-            weather-json-data-${{ steps.setup.outputs.THE_DATE }}-
+#      - name: Cache weather data
+#        id: cache-json
+#        uses: actions/cache@v3
+#        env:
+#          cache-name: cache-weather-json-data
+#        with:
+#          path: ./cache/*.json
+#          key: weather-json-data-${{ steps.setup.outputs.THE_DATE }}-${{ steps.setup.outputs.THE_HOUR }}
+#          restore-keys: |
+#            weather-json-data-${{ steps.setup.outputs.THE_DATE }}-
 
       - name: Creating any missing directories
         id: missing
@@ -54,8 +63,8 @@ jobs:
             mkdir cache
           fi
 
-      - if: ${{ steps.cache-json.outputs.cache-hit != 'true' }}
-        name: Download latest weather data
+#      - if: ${{ steps.cache-json.outputs.cache-hit != 'true' }}
+      - name: Download latest weather data
         run: |
           ## Download weather data
           ./.github/scripts/download-hourly-weather.sh
@@ -81,16 +90,16 @@ jobs:
             mkdir -p "reports/docs/data/$(date +%Y/%m/%d)/"
           fi
 
-      - if: ${{ steps.cache-json.outputs.cache-hit != 'true' }}
-        name: Copy download data
+#      - if: ${{ steps.cache-json.outputs.cache-hit != 'true' }}
+      - name: Copy download data
         run: cp cache/*.json "reports/docs/data/$(date +%Y/%m/%d)/"
 
-      - if: ${{ steps.cache-json.outputs.cache-hit != 'true' }}
-        name: Commit data
-        run: |
-          git config --global user.name "Github Automation"
-          git config --global user.email "<>"
-          cd reports
-          git add .
-          git commit -m "new: report data"
-          git push
+#      - if: ${{ steps.cache-json.outputs.cache-hit != 'true' }}
+#      - name: Commit data
+#        run: |
+#          git config --global user.name "GitHub Automation"
+#          git config --global user.email "<>"
+#          cd reports
+#          git add .
+#          git commit -m "new: report data"
+#          git push
