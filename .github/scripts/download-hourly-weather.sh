@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Include common
+source ./.github/scripts/bash.util/common.sh
+
 # Setup mode
 mode=hourly
 
