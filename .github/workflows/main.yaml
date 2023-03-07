@@ -3,7 +3,7 @@ name: 'Generate Weather Reports'
 on:
   workflow_dispatch:
   schedule:
-    - cron: '45 23,9 * * *'
+    - cron: '00 10,20 * * *'
 
 permissions:
   contents: read
