@@ -3,7 +3,7 @@ name: 'Generate Weather Reports'
 on:
   workflow_dispatch:
   schedule:
-    - cron: '00 10,20 * * *'
+    - cron: '0 10,20 * * *'
 
 permissions:
   contents: read
@@ -90,7 +90,7 @@ jobs:
       - if: ${{ steps.cache-json.outputs.cache-hit != 'true' }}
         name: Commit data
         run: |
-          git config --global user.name "Github Automation"
+          git config --global user.name "GitHub Automation"
           git config --global user.email "<>"
           cd reports
           git add .
