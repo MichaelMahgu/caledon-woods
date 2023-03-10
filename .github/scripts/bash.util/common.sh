@@ -7,7 +7,7 @@ timezone=America%2FNew_York
 timeformat=unixtime
 models=auto
 mode=daily
-current_weather="true"
+current_weather=true
 
 # Setup Environment
 the_date=$(date +"%Y-%m-%d")
