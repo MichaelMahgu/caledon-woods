@@ -19,6 +19,7 @@ jobs:
   generate-weather-reports:
     name: Generate Weather Reports
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: Set scripting environment timezone to EST
         run: |
