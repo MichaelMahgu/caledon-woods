@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 # Basic settings
-latitude=43.9186
-longitude=-79.7973
+latitude=43.92
+longitude=-79.80
 timezone=America%2FNew_York
 timeformat=unixtime
 models=auto
