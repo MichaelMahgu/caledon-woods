@@ -1,0 +1,26 @@
+<script>
+  (async()=>{
+  
+    // Tab: Weather
+    document.getElementById('btn_weather').addEventListener('click', (ev) => {    
+      google.script.run.goto_weather()
+    })
+  
+    // Tab: Primo GDD Tracker
+    document.getElementById('btn_gdd_tracker').addEventListener('click', (ev) => {    
+      google.script.run.goto_gdd_tracker()
+    })
+  
+    // Clear all data
+    document.getElementById('btn_clear_data').addEventListener('click', (ev) => {    
+      google.script.run.clearAllData()
+    })
+  
+    // Quick Import : 2022 Daily (Historical)
+    document.getElementById('btn_quick_import_2022_daily').addEventListener('click', (ev) => {    
+      google.script.run.import2022historicalDailyData();  
+    })
+  
+  })()
+  
+  </script>
