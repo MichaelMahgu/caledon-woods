@@ -68,6 +68,7 @@ jobs:
           ## Download weather data
           ./.github/scripts/download-hourly-weather.sh
           ./.github/scripts/download-daily-weather.sh
+          ./.github/scripts/download-gem-hourly-weather.sh
 
       - name: Checkout reports repo
         uses: actions/checkout@v3
