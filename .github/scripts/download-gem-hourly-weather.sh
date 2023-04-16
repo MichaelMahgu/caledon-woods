@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Include common
+# Include gem
 source ./.github/scripts/bash.util/gem.sh
 
 # Setup mode
