@@ -2,8 +2,8 @@ name: 'Generate Weather Reports [nodejs]'
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 * * * *'
+#  schedule:
+#    - cron: '0 * * * *'
 
 permissions:
   contents: read
