@@ -106,7 +106,7 @@ const BuildApiUrl = () => {
 }
 
 const BuildFilename = () => {
-  module.exports.final_name = `cache/${module.exports.timestamp.the_hour}-${module.exports.config.mode}-gem-js.json`
+  module.exports.final_name = `cache/${module.exports.timestamp.the_hour}-${module.exports.config.mode}.json`
 }
 
 module.exports.prepare = async () => {
