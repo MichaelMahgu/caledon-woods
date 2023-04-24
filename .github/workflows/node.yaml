@@ -39,38 +39,35 @@ jobs:
           ## Download weather data
           ./.github/scripts/download-gem-weather.js hourly
           ./.github/scripts/download-gem-weather.js daily
-          ls cache/ > tmpx
-          cat tmpx
-          rm tmpx
 
-#      - name: Checkout reports repo
-#        uses: actions/checkout@v3
-#        with:
-#          repository: MichaelMahgu/caledon-woods-weather-reports
-#          ref: 'main'
-#          token:  ${{ secrets.ACTIONS_GITHUB_TOKEN }}
-#          path: reports
+      - name: Checkout reports repo
+        uses: actions/checkout@v3
+        with:
+          repository: MichaelMahgu/caledon-woods-weather-reports
+          ref: 'main'
+          token:  ${{ secrets.ACTIONS_GITHUB_TOKEN }}
+          path: reports
 
-#      - name: Creating any missing directories
-#        id: missing2
-#        working-directory: ${{ github.workspace }}
-#        run: |
-#          ## Create missing directories
-#          if [[ ! -e cache ]]; then
-#            mkdir cache
-#          fi
-#          if [ ! -e "reports/docs/data/$(date +%Y/%m/%d)/" ]; then
-#            mkdir -p "reports/docs/data/$(date +%Y/%m/%d)/"
-#          fi
+      - name: Creating any missing directories
+        id: missing2
+        working-directory: ${{ github.workspace }}
+        run: |
+          ## Create missing directories
+          if [[ ! -e cache ]]; then
+            mkdir cache
+          fi
+          if [ ! -e "reports/docs/data/$(date +%Y/%m/%d)/" ]; then
+            mkdir -p "reports/docs/data/$(date +%Y/%m/%d)/"
+          fi
 
-#      - name: Copy download data
-#        run: cp cache/*.json "reports/docs/data/$(date +%Y/%m/%d)/"
+      - name: Copy download data
+        run: cp cache/*.json "reports/docs/data/$(date +%Y/%m/%d)/"
 
-#      - name: Commit data
-#        run: |
-#          git config --global user.name "GitHub Automation"
-#          git config --global user.email "<>"
-#          cd reports
-#          git add .
-#          git commit -m "new: report data"
-#          git push
+      - name: Commit data
+        run: |
+          git config --global user.name "GitHub Automation"
+          git config --global user.email "<>"
+          cd reports
+          git add .
+          git commit -m "new: report data"
+          git push
