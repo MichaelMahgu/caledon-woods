@@ -39,6 +39,9 @@ jobs:
           ## Download weather data
           ./.github/scripts/download-gem-weather.js hourly
           ./.github/scripts/download-gem-weather.js daily
+          ls cache/ > tmpx
+          cat tmpx
+          rm tmpx
 
 #      - name: Checkout reports repo
 #        uses: actions/checkout@v3
