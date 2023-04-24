@@ -37,9 +37,8 @@ jobs:
       - name: Download weather data
         run: |
           ## Download weather data
-          ./.github/scripts/download-weather-dev.js
-          ./.github/scripts/download-weather-dev.js hourly
-          ./.github/scripts/download-weather-dev.js daily
+          ./.github/scripts/download-gem-weather.js hourly
+          ./.github/scripts/download-gem-weather.js daily
 
 #      - name: Checkout reports repo
 #        uses: actions/checkout@v3

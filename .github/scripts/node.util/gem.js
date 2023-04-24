@@ -65,20 +65,22 @@ module.exports = {
     "et0_fao_evapotranspiration",
   ],
   args: process.argv.slice(2),
-  prepare: () => {
-    // Setup mode from first argument
-    module.exports.config.mode = module.exports.args.length != 0
-      ? module.exports.args[0]
-      : module.exports.mode.hourly
+}
 
-    // Make sure mode is valid
-    if (!module.exports.mode[module.exports.config.mode]) {
-      module.exports.config.mode = module.exports.mode.hourly
-    }
-    console.log(module.exports.config.mode)
-  },
-  fetch: () => {
-  },
-  store: () => {
-  },
+module.exports.prepare = () => {
+  // Setup mode from first argument
+  module.exports.config.mode = module.exports.args.length != 0
+    ? module.exports.args[0]
+    : module.exports.mode.hourly
+
+  // Make sure mode is valid
+  if (!module.exports.mode[module.exports.config.mode]) {
+    module.exports.config.mode = module.exports.mode.hourly
+  }
+}
+
+module.exports.fetch = () => {
+}
+
+module.exports.store = () => {
 }
