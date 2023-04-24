@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# These might be the api reference coords
+# 43.9135,-79.805
+
 # Basic settings
 latitude=43.92
 longitude=-79.80
@@ -44,4 +47,26 @@ hourly_captures=(
   "soil_moisture_0_to_10cm"
   "direct_radiation"
   "diffuse_radiation"
+)
+
+# Define daily captures
+daily_captures=(
+  "weathercode"
+  "temperature_2m_max"
+  "temperature_2m_min"
+  "apparent_temperature_max"
+  "apparent_temperature_min"
+  "sunrise"
+  "sunset"
+  "precipitation_sum"
+  "rain_sum"
+  "showers_sum"
+  "snowfall_sum"
+  "precipitation_hours"
+  "precipitation_probability_max"
+  "windspeed_10m_max"
+  "windgusts_10m_max"
+  "winddirection_10m_dominant"
+  "shortwave_radiation_sum"
+  "et0_fao_evapotranspiration"
 )
