@@ -63,7 +63,6 @@ daily_captures=(
   "showers_sum"
   "snowfall_sum"
   "precipitation_hours"
-  "precipitation_probability_max"
   "windspeed_10m_max"
   "windgusts_10m_max"
   "winddirection_10m_dominant"
