@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 const gem = require('./node.util/gem')
 ;
-gem.prepare()
-gem.fetch()
-gem.store()
+(async () => {
+  await gem.prepare()
+  await gem.fetch()
+  await gem.store()
+})()
