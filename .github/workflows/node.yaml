@@ -29,37 +29,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Setup scripting environment variables
-        id: setup
-        working-directory: ${{ github.workspace }}
-        run: |
-          ## Setup environment
-          echo "::group::Set environment variables"
-          echo "THE_DATE=$(date +"%Y-%m-%d")" >> $GITHUB_OUTPUT
-          echo "THE_YEAR=$(date +"%Y")" >> $GITHUB_OUTPUT
-          echo "THE_MONTH=$(date +"%m")" >> $GITHUB_OUTPUT
-          echo "THE_DAY=$(date +"%d")" >> $GITHUB_OUTPUT
-          echo "THE_HOUR=$(date +"%H")" >> $GITHUB_OUTPUT
-          echo "::endgroup::"
-
-      - name: Creating any missing directories
-        id: missing
-        working-directory: ${{ github.workspace }}
-        run: |
-          ## Create missing directories
-          if [[ ! -e cache ]]; then
-            mkdir cache
-          fi
-
       - name: Setup nodejs
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      - name: Download latest weather data
+      - name: Download weather data
         run: |
           ## Download weather data
           ./.github/scripts/download-weather-dev.js
+          ./.github/scripts/download-weather-dev.js hourly
+          ./.github/scripts/download-weather-dev.js daily
 
 #      - name: Checkout reports repo
 #        uses: actions/checkout@v3

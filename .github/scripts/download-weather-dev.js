@@ -1,2 +1,7 @@
 #!/usr/bin/env node
-console.log('dev test')
+//const gem = require('./.github/scripts/node.util/gem')
+const gem = require('./node.util/gem')
+;
+gem.prepare()
+gem.fetch()
+gem.store()
